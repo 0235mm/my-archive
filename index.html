@@ -764,7 +764,15 @@ canvas{display:block;width:100%!important}
 const S={events:[],todos:[],hd:{},exams:[],diary:{},fam:{mom:[],dad:[],bro:[],me:[],podo:[],etc:[]},famTodos:{},journals:{}};
 const SK='arc9_v1';
 function ld(){try{const d=localStorage.getItem(SK);if(d)Object.assign(S,JSON.parse(d));}catch(e){}}
-function sv(){try{localStorage.setItem(SK,JSON.stringify(S));}catch(e){}}
+function sv(){
+  try{
+    localStorage.setItem(SK,JSON.stringify(S));
+  }catch(e){
+    toast('⚠️ 저장 실패: 용량 초과. 내보내기 후 오래된 일정을 삭제해주세요.');
+    console.error('sv() failed:',e);
+    throw e;
+  }
+}
 
 const CATS={
   수업:    {bg:'#d8e8f8',b:'#3a7ac0',t:'#0a2a60',g:'회사'},
@@ -1026,30 +1034,42 @@ function saveEv(){
     const i=S.events.findIndex(e=>e.id==eid);if(i!==-1)Object.assign(S.events[i],{name:n,date,start,end,cat,memo});
     sv();closeMo();rCal();toast('수정됐어요');return;
   }
-  if(rep!=='none'){
-    var parts=date.split('-');
-    var cur=new Date(parseInt(parts[0]),parseInt(parts[1])-1,parseInt(parts[2]));
-    var ed;
-    if(re&&re.length===10){var ep=re.split('-');ed=new Date(parseInt(ep[0]),parseInt(ep[1])-1,parseInt(ep[2]));}
-    else{ed=new Date(cur.getFullYear()+1,cur.getMonth(),cur.getDate());}
-    var cnt=0;var baseId=Date.now();
-    while(cnt<500&&cur<=ed){
-      var ds=cur.getFullYear()+'-'+String(cur.getMonth()+1).padStart(2,'0')+'-'+String(cur.getDate()).padStart(2,'0');
-      var skip=false;
-      if(rep==='weekday'&&(cur.getDay()===0||cur.getDay()===6))skip=true;
-      if(!skip)S.events.push({id:baseId+cnt*1000,name:n,date:ds,start:start,end:end,cat:cat,memo:memo,rec:true});
-      if(rep==='daily'||rep==='weekday')cur.setDate(cur.getDate()+1);
-      else if(rep==='weekly')cur.setDate(cur.getDate()+7);
-      else if(rep==='biweekly')cur.setDate(cur.getDate()+14);
-      else cur.setMonth(cur.getMonth()+1);
-      cnt++;
+  try{
+    if(rep!=='none'){
+      var parts=date.split('-');
+      var cur=new Date(parseInt(parts[0]),parseInt(parts[1])-1,parseInt(parts[2]));
+      var ed;
+      if(re&&re.length===10){var ep=re.split('-');ed=new Date(parseInt(ep[0]),parseInt(ep[1])-1,parseInt(ep[2]));}
+      else{ed=new Date(cur.getFullYear()+1,cur.getMonth(),cur.getDate());}
+      var cnt=0;var baseId=Date.now();
+      var newEvents=[];
+      while(cnt<500&&cur<=ed){
+        var ds=cur.getFullYear()+'-'+String(cur.getMonth()+1).padStart(2,'0')+'-'+String(cur.getDate()).padStart(2,'0');
+        var skip=(rep==='weekday'&&(cur.getDay()===0||cur.getDay()===6));
+        if(!skip)newEvents.push({id:baseId+cnt*1000,name:n,date:ds,start:start,end:end,cat:cat,memo:memo,rec:true});
+        if(rep==='daily'||rep==='weekday')cur.setDate(cur.getDate()+1);
+        else if(rep==='weekly')cur.setDate(cur.getDate()+7);
+        else if(rep==='biweekly')cur.setDate(cur.getDate()+14);
+        else cur.setMonth(cur.getMonth()+1);
+        cnt++;
+      }
+      // Add all at once
+      newEvents.forEach(function(ev){S.events.push(ev);});
+      sv();
+      closeMo();rCal();
+      toast(newEvents.length+'개 반복 일정 저장됐어요 🎉');
+      return;
     }
-    var saved=S.events.filter(function(e){return e.rec&&e.name===n&&e.start===start;}).length;
-    sv();closeMo();rCal();toast(saved+'개 반복 일정 저장됐어요');
-    return;
+    S.events.push({id:Date.now(),name:n,date:date,start:start,end:end,cat:cat,memo:memo});
+    sv();closeMo();rCal();toast('저장됐어요');
+  }catch(err){
+    console.error('saveEv error:',err);
+    if(err.message&&err.message.includes('quota')){
+      toast('저장 용량 초과! 내보내기 후 오래된 일정 삭제 필요');
+    }else{
+      toast('저장 오류: '+err.message);
+    }
   }
-  S.events.push({id:Date.now(),name:n,date,start,end,cat,memo});
-  sv();closeMo();rCal();toast('저장됐어요');
 }
 function delEv(){const eid=document.getElementById('ev-eid').value;if(!eid)return;if(!confirm('삭제할까요?'))return;S.events=S.events.filter(e=>e.id!=eid);sv();closeMo();rCal();toast('삭제됐어요');}
 
