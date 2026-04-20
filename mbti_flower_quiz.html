@@ -291,7 +291,7 @@ const QUIZ_URL = 'https://0235mm.github.io/my-archive/mbti_flower_quiz.html';
 
 // ★★★ Apps Script 배포 URL을 여기에 넣으세요 ★★★
 // script.google.com → 배포 → 웹앱 → URL 복사
-const STATS_URL = 'https://script.google.com/macros/s/AKfycbxKEJSY0b4a2xNPxX_Ff6IykzRE0aAnMeQBVIs03aFK8WvaIUVtnofmmMRSKDxMsJ-o/exec'; // 예) 'https://script.google.com/macros/s/AKfycb.../exec'
+const STATS_URL = ''; // 예) 'https://script.google.com/macros/s/AKfycb.../exec'
 // ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
 
 // ── 꽃 SVG (유형별 실제 꽃 형태) ─────────────────
@@ -389,17 +389,21 @@ ENFJ: c=>`<svg viewBox="0 0 170 183" width="170" height="183" xmlns="http://www.
 </svg>`,
 
 ENFP: c=>`<svg viewBox="0 0 160 210" width="160" height="210" xmlns="http://www.w3.org/2000/svg">
-  <line x1="80" y1="206" x2="80" y2="128" stroke="#5a9e6f" stroke-width="5.5" stroke-linecap="round"/>
-  <path d="M80 186 Q55 173 48 156" stroke="#5a9e6f" stroke-width="3.5" fill="none" stroke-linecap="round"/>
-  <path d="M80 168 Q108 155 116 138" stroke="#5a9e6f" stroke-width="3.5" fill="none" stroke-linecap="round"/>
-  <path d="M80 184 Q52 170 44 148 Q52 134 66 144 Q75 158 80 174 Z" fill="#4ade80" opacity=".85"/>
-  <path d="M80 166 Q110 152 118 130 Q108 116 96 126 Q86 142 80 160 Z" fill="#22c55e" opacity=".85"/>
-  <path d="M66 128 Q52 94 60 64 Q70 46 80 56 Q70 86 66 128 Z" fill="${c}"/>
-  <path d="M94 128 Q108 94 100 64 Q90 46 80 56 Q90 86 94 128 Z" fill="${c}" opacity=".85"/>
-  <path d="M73 128 Q62 88 67 50 Q75 34 80 46 Q76 74 73 128 Z" fill="#fed7aa" opacity=".85"/>
-  <path d="M87 128 Q98 88 93 50 Q85 34 80 46 Q84 74 87 128 Z" fill="#ffedd5" opacity=".85"/>
-  <path d="M66 128 Q73 140 80 143 Q87 140 94 128" stroke="#c2410c" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-</svg>`,
+  <line x1="80" y1="206" x2="80" y2="128" stroke="#4a8040" stroke-width="5" stroke-linecap="round"/>
+  <path d="M80 170 Q54 156 46 130 Q56 114 68 126 Q74 144 79 162Z" fill="#f9a8d4" stroke="#ec4899" stroke-width="2"/>
+  <path d="M80 170 Q106 156 114 130 Q104 114 92 126 Q86 144 81 162Z" fill="#fce7f3" stroke="#f472b6" stroke-width="2"/>
+  <path d="M80 170 Q56 186 44 174 Q42 156 58 154 Q70 158 78 166Z" fill="#f9a8d4" stroke="#ec4899" stroke-width="2"/>
+  <path d="M80 170 Q104 186 116 174 Q118 156 102 154 Q90 158 82 166Z" fill="#fce7f3" stroke="#f472b6" stroke-width="2"/>
+  <path d="M80 170 Q72 192 80 200 Q88 192 80 170Z" fill="#f9a8d4" stroke="#ec4899" stroke-width="2"/>
+  <line x1="80" y1="170" x2="80" y2="122" stroke="#be185d" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="80" cy="118" r="8" fill="#fbbf24" stroke="#d97706" stroke-width="2"/>
+  <circle cx="68" cy="128" r="5.5" fill="#fbbf24" stroke="#d97706" stroke-width="1.5"/>
+  <circle cx="92" cy="128" r="5.5" fill="#fbbf24" stroke="#d97706" stroke-width="1.5"/>
+  <circle cx="62" cy="140" r="4.5" fill="#fbbf24" stroke="#d97706" stroke-width="1.5"/>
+  <circle cx="98" cy="140" r="4.5" fill="#fbbf24" stroke="#d97706" stroke-width="1.5"/>
+  <path d="M80 185 Q54 172 46 148 Q56 132 68 144 Q75 162 79 180Z" fill="#4ade80" stroke="#22c55e" stroke-width="1.5" opacity=".7"/>
+  <path d="M80 172 Q106 159 114 135 Q104 119 92 131 Q86 150 81 169Z" fill="#22c55e" stroke="#16a34a" stroke-width="1.5" opacity=".7"/>
+</svg>``,
 
 ISTJ: c=>`<svg viewBox="0 0 180 196" width="180" height="196" xmlns="http://www.w3.org/2000/svg">
   <line x1="90" y1="192" x2="90" y2="126" stroke="#5a9e6f" stroke-width="4.5" stroke-linecap="round"/>
@@ -609,7 +613,7 @@ const mbtiData={
   INFJ:{flower:'백합',group:'외교형 (NF)',emoji:'🤍',color:'#10b981',bg:'#ecfdf5',desc:'백합처럼 <strong style="color:#7855b8">순수</strong>하고 <strong style="color:#7855b8">깊이</strong> 있는 당신!<br>마음으로 세상을 움직이는 사람이에요 🤍'},
   INFP:{flower:'벚꽃',group:'외교형 (NF)',emoji:'🌸',color:'#ec4899',bg:'#fdf2f8',desc:'섬세한 <strong style="color:#c85880">감수성</strong>으로 작은 순간에도 <strong style="color:#c85880">아름다움</strong>을 발견하는 벚꽃형이에요!<br>순수한 열정으로 세상을 따뜻하게 만드는 사람이에요 🌸'},
   ENFJ:{flower:'장미',group:'외교형 (NF)',emoji:'🌹',color:'#e11d48',bg:'#fff1f2',desc:'사람을 끌어당기는 <strong style="color:#e04040">장미형</strong>이에요!<br><strong style="color:#e04040">사랑</strong>과 존경으로 모두를 더 빛나게 하는 사람이에요 🌹'},
-  ENFP:{flower:'튤립',group:'외교형 (NF)',emoji:'🌷',color:'#f97316',bg:'#fff7ed',desc:'어디서나 분위기를 밝히는 <strong style="color:#e0508a">튤립형</strong>이에요!<br>사랑의 에너지로 <strong style="color:#e0508a">희망</strong>을 전하는 사람이에요 🌷'},
+  ENFP:{flower:'히비스커스',group:'외교형 (NF)',emoji:'🌷',color:'#f97316',bg:'#fff7ed',desc:'섬세한 아름다움으로 세상을 물들이는 히비스커스형이에요!<br>열정적인 에너지로 모두를 설레게 하는 사람이에요 🌺'},
   ISTJ:{flower:'국화',group:'관리자형 (SJ)',emoji:'🌼',color:'#ca8a04',bg:'#fefce8',desc:'성실함과 <strong style="color:#6b8f52">진실함</strong>이 빛나는 <strong style="color:#6b8f52">국화형</strong>이에요!<br>꾸준히 맡은 일을 완수하는 든든한 사람이에요 🌼'},
   ISFJ:{flower:'카네이션',group:'관리자형 (SJ)',emoji:'🌸',color:'#f43f5e',bg:'#fff1f2',desc:'사랑을 행동으로 보여주는 <strong style="color:#d4607a">카네이션형</strong>이에요!<br>따뜻한 <strong style="color:#d4607a">배려</strong>로 주변을 행복하게 하는 사람이에요 🌸'},
   ESTJ:{flower:'거베라',group:'관리자형 (SJ)',emoji:'🌺',color:'#dc2626',bg:'#fef2f2',desc:'믿음직한 <strong style="color:#dc4040">리더십</strong>의 <strong style="color:#dc4040">거베라형</strong>이에요!<br>열정과 긍정으로 모두를 이끄는 사람이에요 🌺'},
