@@ -767,6 +767,7 @@ function ld(){try{const d=localStorage.getItem(SK);if(d)Object.assign(S,JSON.par
 function sv(){
   try{
     localStorage.setItem(SK,JSON.stringify(S));
+    scheduleDriveSync();
   }catch(e){
     toast('⚠️ 저장 실패: 용량 초과. 내보내기 후 오래된 일정을 삭제해주세요.');
     console.error('sv() failed:',e);
@@ -2192,9 +2193,7 @@ async function loadFromDrive() {
 }
 
 // Auto-save to Drive 30 seconds after any data change
-var origSv = sv;
-function sv() {
-  origSv();
+function scheduleDriveSync() {
   if(gdriveToken) {
     clearTimeout(gdriveSyncTimer);
     gdriveSyncTimer = setTimeout(saveToDrive, 30000);
